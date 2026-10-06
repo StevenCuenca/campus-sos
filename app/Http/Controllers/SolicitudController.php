@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Solicitud;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,10 +14,11 @@ class SolicitudController extends Controller
     // READ - Mostrar las solicitudes del usuario autenticado
     public function index(): Response
     {
-        $solicitudes = Solicitud::where('user_id', auth()->id())
+        $solicitudes = Solicitud::query()
+            ->where('user_id', auth()->id())
             ->latest()
             ->get()
-            ->map(function ($solicitud) {
+            ->map(function (Solicitud $solicitud): array {
                 return [
                     'id' => $solicitud->id,
                     'titulo' => $solicitud->titulo,
@@ -28,7 +30,6 @@ class SolicitudController extends Controller
                     'inicia_en' => $solicitud->inicia_en?->toISOString(),
                     'expira_en' => $solicitud->expira_en?->toISOString(),
 
-                    // El sistema calcula el estado automáticamente
                     'estado_temporal' => $solicitud->estadoTemporal(),
                 ];
             });
@@ -53,12 +54,14 @@ class SolicitudController extends Controller
             'categoria' => ['required', 'string', 'max:100'],
             'ubicacion' => ['required', 'string', 'max:255'],
             'urgencia' => ['required', 'in:baja,media,alta'],
-
             'inicia_en' => ['required', 'date'],
             'expira_en' => ['required', 'date', 'after:inicia_en'],
         ]);
 
-        $request->user()->solicitudes()->create([
+        /** @var User $user */
+        $user = $request->user();
+
+        $user->solicitudes()->create([
             ...$datos,
             'estado' => 'activa',
         ]);
@@ -71,13 +74,11 @@ class SolicitudController extends Controller
     // Mostrar formulario para editar
     public function edit(Solicitud $solicitud): Response
     {
-        // Solo el propietario puede editar su solicitud
         abort_unless(
             $solicitud->user_id === auth()->id(),
             403
         );
 
-        // Una solicitud expirada no puede editarse
         abort_if(
             $solicitud->estadoTemporal() === 'expirada',
             403,
@@ -94,14 +95,11 @@ class SolicitudController extends Controller
         Request $request,
         Solicitud $solicitud
     ): RedirectResponse {
-
-        // Solo el propietario puede modificarla
         abort_unless(
             $solicitud->user_id === auth()->id(),
             403
         );
 
-        // Una solicitud expirada no puede modificarse
         abort_if(
             $solicitud->estadoTemporal() === 'expirada',
             403,
@@ -114,7 +112,6 @@ class SolicitudController extends Controller
             'categoria' => ['required', 'string', 'max:100'],
             'ubicacion' => ['required', 'string', 'max:255'],
             'urgencia' => ['required', 'in:baja,media,alta'],
-
             'inicia_en' => ['required', 'date'],
             'expira_en' => ['required', 'date', 'after:inicia_en'],
         ]);
@@ -129,7 +126,6 @@ class SolicitudController extends Controller
     // DELETE - Eliminar una solicitud
     public function destroy(Solicitud $solicitud): RedirectResponse
     {
-        // Solo el propietario puede eliminarla
         abort_unless(
             $solicitud->user_id === auth()->id(),
             403

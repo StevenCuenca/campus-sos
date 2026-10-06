@@ -44,6 +44,9 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return HasMany<Solicitud, $this>
+     */
     public function solicitudes(): HasMany
     {
         return $this->hasMany(Solicitud::class);

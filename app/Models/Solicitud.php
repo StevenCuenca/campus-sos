@@ -6,6 +6,18 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string $titulo
+ * @property string $descripcion
+ * @property string $categoria
+ * @property string $ubicacion
+ * @property string $urgencia
+ * @property string $estado
+ * @property Carbon|null $inicia_en
+ * @property Carbon|null $expira_en
+ */
 class Solicitud extends Model
 {
     protected $table = 'solicitudes';
@@ -30,6 +42,9 @@ class Solicitud extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
