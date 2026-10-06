@@ -12,7 +12,6 @@ use Inertia\Inertia;
 
 Route::inertia('/', 'Welcome')->name('home');
 
-
 /*
 |--------------------------------------------------------------------------
 | Rutas protegidas
@@ -39,30 +38,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ->latest()
             ->get();
 
-
         // Contar solicitudes activas
         $activas = $solicitudes
-            ->filter(fn ($solicitud) =>
-                $solicitud->estadoTemporal() === 'activa'
+            ->filter(fn ($solicitud) => $solicitud->estadoTemporal() === 'activa'
             )
             ->count();
-
 
         // Contar solicitudes programadas
         $programadas = $solicitudes
-            ->filter(fn ($solicitud) =>
-                $solicitud->estadoTemporal() === 'programada'
+            ->filter(fn ($solicitud) => $solicitud->estadoTemporal() === 'programada'
             )
             ->count();
-
 
         // Contar solicitudes expiradas
         $expiradas = $solicitudes
-            ->filter(fn ($solicitud) =>
-                $solicitud->estadoTemporal() === 'expirada'
+            ->filter(fn ($solicitud) => $solicitud->estadoTemporal() === 'expirada'
             )
             ->count();
-
 
         // Enviar información al Dashboard.vue
         return Inertia::render('Dashboard', [
@@ -79,7 +71,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'programadas' => $programadas,
                 'expiradas' => $expiradas,
             ],
-
 
             /*
             |--------------------------------------------------------------
@@ -99,21 +90,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                     'urgencia' => $solicitud->urgencia,
 
-                    'estado_temporal' =>
-                        $solicitud->estadoTemporal(),
+                    'estado_temporal' => $solicitud->estadoTemporal(),
 
-                    'inicia_en' =>
-                        $solicitud->inicia_en?->toISOString(),
+                    'inicia_en' => $solicitud->inicia_en?->toISOString(),
 
-                    'expira_en' =>
-                        $solicitud->expira_en?->toISOString(),
+                    'expira_en' => $solicitud->expira_en?->toISOString(),
 
                 ])
                 ->values(),
         ]);
 
     })->name('dashboard');
-
 
     Route::resource(
         'solicitudes',
@@ -125,7 +112,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
 
 });
-
-
 
 require __DIR__.'/settings.php';

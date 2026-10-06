@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Solicitud;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -94,7 +94,7 @@ class SolicitudController extends Controller
         Request $request,
         Solicitud $solicitud
     ): RedirectResponse {
-        
+
         // Solo el propietario puede modificarla
         abort_unless(
             $solicitud->user_id === auth()->id(),
