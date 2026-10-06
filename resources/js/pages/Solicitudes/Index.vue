@@ -79,13 +79,10 @@ const formatearFecha = (fecha: string | null) => {
     <Head title="Mis Solicitudes" />
 
     <div class="flex h-full flex-1 flex-col gap-6 p-4">
-
         <!-- ENCABEZADO -->
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-2xl font-bold">
-                    Mis SOS
-                </h1>
+                <h1 class="text-2xl font-bold">Mis SOS</h1>
 
                 <p class="text-sm text-muted-foreground">
                     Administra tus solicitudes de ayuda.
@@ -105,9 +102,7 @@ const formatearFecha = (fecha: string | null) => {
             v-if="solicitudes.length === 0"
             class="rounded-2xl border p-10 text-center"
         >
-            <div class="text-4xl">
-                🆘
-            </div>
+            <div class="text-4xl">🆘</div>
 
             <h2 class="mt-3 text-lg font-semibold">
                 Todavía no tienes solicitudes
@@ -119,10 +114,7 @@ const formatearFecha = (fecha: string | null) => {
         </div>
 
         <!-- SOLICITUDES -->
-        <div
-            v-else
-            class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"
-        >
+        <div v-else class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             <article
                 v-for="solicitud in solicitudes"
                 :key="solicitud.id"
@@ -162,9 +154,7 @@ const formatearFecha = (fecha: string | null) => {
                         </span>
                     </p>
 
-                    <p>
-                        📍 {{ solicitud.ubicacion }}
-                    </p>
+                    <p>📍 {{ solicitud.ubicacion }}</p>
 
                     <p>
                         🕐 Inicio:
@@ -179,7 +169,6 @@ const formatearFecha = (fecha: string | null) => {
 
                 <!-- ACCIONES -->
                 <div class="mt-5 flex gap-2 border-t pt-4">
-
                     <!-- SOLO EDITABLE SI NO EXPIRÓ -->
                     <Link
                         v-if="solicitud.estado_temporal !== 'expirada'"

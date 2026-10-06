@@ -18,10 +18,7 @@ withDefaults(defineProps<Props>(), {
     <AppShell variant="sidebar">
         <AppSidebar />
 
-        <AppContent
-            variant="sidebar"
-            class="min-w-0 overflow-x-clip"
-        >
+        <AppContent variant="sidebar" class="min-w-0 overflow-x-clip">
             <slot />
         </AppContent>
 

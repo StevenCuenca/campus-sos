@@ -62,11 +62,8 @@ const actualizar = () => {
     <Head title="Editar Solicitud" />
 
     <div class="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4">
-
         <div>
-            <h1 class="text-2xl font-bold">
-                Editar SOS
-            </h1>
+            <h1 class="text-2xl font-bold">Editar SOS</h1>
 
             <p class="mt-1 text-sm text-muted-foreground">
                 Actualiza la información de tu solicitud.
@@ -77,7 +74,6 @@ const actualizar = () => {
             class="space-y-5 rounded-xl border p-6"
             @submit.prevent="actualizar"
         >
-
             <!-- TÍTULO -->
             <div>
                 <label class="mb-2 block text-sm font-medium">
@@ -90,10 +86,7 @@ const actualizar = () => {
                     class="w-full rounded-lg border bg-background px-3 py-2"
                 />
 
-                <p
-                    v-if="form.errors.titulo"
-                    class="mt-1 text-sm text-red-500"
-                >
+                <p v-if="form.errors.titulo" class="mt-1 text-sm text-red-500">
                     {{ form.errors.titulo }}
                 </p>
             </div>
@@ -128,25 +121,15 @@ const actualizar = () => {
                     v-model="form.categoria"
                     class="w-full rounded-lg border bg-background px-3 py-2"
                 >
-                    <option value="prestamo">
-                        Préstamo
-                    </option>
+                    <option value="prestamo">Préstamo</option>
 
-                    <option value="academico">
-                        Ayuda académica
-                    </option>
+                    <option value="academico">Ayuda académica</option>
 
-                    <option value="tecnologia">
-                        Tecnología
-                    </option>
+                    <option value="tecnologia">Tecnología</option>
 
-                    <option value="companero">
-                        Buscar compañero
-                    </option>
+                    <option value="companero">Buscar compañero</option>
 
-                    <option value="otro">
-                        Otro
-                    </option>
+                    <option value="otro">Otro</option>
                 </select>
 
                 <p
@@ -179,25 +162,17 @@ const actualizar = () => {
 
             <!-- URGENCIA -->
             <div>
-                <label class="mb-2 block text-sm font-medium">
-                    Urgencia
-                </label>
+                <label class="mb-2 block text-sm font-medium"> Urgencia </label>
 
                 <select
                     v-model="form.urgencia"
                     class="w-full rounded-lg border bg-background px-3 py-2"
                 >
-                    <option value="baja">
-                        🟢 Baja
-                    </option>
+                    <option value="baja">🟢 Baja</option>
 
-                    <option value="media">
-                        🟡 Media
-                    </option>
+                    <option value="media">🟡 Media</option>
 
-                    <option value="alta">
-                        🔴 Alta
-                    </option>
+                    <option value="alta">🔴 Alta</option>
                 </select>
 
                 <p
@@ -210,16 +185,13 @@ const actualizar = () => {
 
             <!-- HORARIO -->
             <div class="border-t pt-5">
-                <h2 class="mb-1 font-semibold">
-                    Horario del SOS
-                </h2>
+                <h2 class="mb-1 font-semibold">Horario del SOS</h2>
 
                 <p class="mb-4 text-sm text-muted-foreground">
                     Puedes modificar cuándo comienza y termina tu solicitud.
                 </p>
 
                 <div class="grid gap-4 md:grid-cols-2">
-
                     <!-- INICIO -->
                     <div>
                         <label class="mb-2 block text-sm font-medium">
@@ -259,13 +231,11 @@ const actualizar = () => {
                             {{ form.errors.expira_en }}
                         </p>
                     </div>
-
                 </div>
             </div>
 
             <!-- BOTONES -->
             <div class="flex justify-end gap-3 border-t pt-5">
-
                 <Link
                     href="/solicitudes"
                     class="rounded-lg border px-4 py-2 text-sm font-medium"
@@ -278,15 +248,9 @@ const actualizar = () => {
                     :disabled="form.processing"
                     class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
                 >
-                    {{
-                        form.processing
-                            ? 'Guardando...'
-                            : 'Guardar cambios'
-                    }}
+                    {{ form.processing ? 'Guardando...' : 'Guardar cambios' }}
                 </button>
-
             </div>
-
         </form>
     </div>
 </template>

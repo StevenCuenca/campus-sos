@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import {
-    Home,
-    PlusCircle,
-    ClipboardList,
-    Settings,
-} from '@lucide/vue';
+import { Home, PlusCircle, ClipboardList, Settings } from '@lucide/vue';
 
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -60,11 +55,7 @@ const settingsNavItems: NavItem[] = [
         <SidebarHeader class="pt-4">
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton
-                        size="lg"
-                        as-child
-                        class="h-auto py-3"
-                    >
+                    <SidebarMenuButton size="lg" as-child class="h-auto py-3">
                         <Link :href="dashboard()">
                             <div
                                 class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#7A1631] text-lg font-bold text-white shadow-sm"
@@ -96,7 +87,7 @@ const settingsNavItems: NavItem[] = [
         <!-- NAVEGACIÓN -->
         <SidebarContent class="px-2">
             <div
-                class="mb-2 mt-4 px-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground group-data-[collapsible=icon]:hidden"
+                class="mt-4 mb-2 px-2 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase group-data-[collapsible=icon]:hidden"
             >
                 Principal
             </div>
@@ -107,16 +98,14 @@ const settingsNavItems: NavItem[] = [
         <!-- FOOTER -->
         <SidebarFooter class="px-2 pb-4">
             <div
-                class="mb-1 px-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground group-data-[collapsible=icon]:hidden"
+                class="mb-1 px-2 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase group-data-[collapsible=icon]:hidden"
             >
                 Mi cuenta
             </div>
 
             <NavMain :items="settingsNavItems" />
 
-            <div
-                class="my-2 h-px bg-[#7A1631]/10 dark:bg-white/10"
-            ></div>
+            <div class="my-2 h-px bg-[#7A1631]/10 dark:bg-white/10"></div>
 
             <NavUser />
         </SidebarFooter>

@@ -76,8 +76,7 @@ const formatearDia = (fecha: string | null) => {
 const tiempoRestante = (fecha: string | null) => {
     if (!fecha) return 'Sin límite';
 
-    const diferencia =
-        new Date(fecha).getTime() - new Date().getTime();
+    const diferencia = new Date(fecha).getTime() - new Date().getTime();
 
     if (diferencia <= 0) {
         return 'Expirada';
@@ -93,9 +92,7 @@ const tiempoRestante = (fecha: string | null) => {
     const resto = minutos % 60;
 
     if (horas < 24) {
-        return resto > 0
-            ? `${horas}h ${resto}m`
-            : `${horas}h`;
+        return resto > 0 ? `${horas}h ${resto}m` : `${horas}h`;
     }
 
     const dias = Math.floor(horas / 24);
@@ -126,15 +123,14 @@ const anchoTiempo = (solicitud: Solicitud) => {
     <Head title="CampusSOS" />
 
     <main class="min-h-full bg-[#FBF8F6] text-[#321C22]">
-
         <!-- CABECERA -->
-        <div class="px-6 pb-5 pt-8 md:px-10">
+        <div class="px-6 pt-8 pb-5 md:px-10">
             <div
                 class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between"
             >
                 <div>
                     <div
-                        class="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-[#9A5365]"
+                        class="mb-3 flex items-center gap-2 text-xs font-bold tracking-[0.22em] text-[#9A5365] uppercase"
                     >
                         <span
                             class="inline-block size-2 rounded-full bg-[#8A1835]"
@@ -148,11 +144,9 @@ const anchoTiempo = (solicitud: Solicitud) => {
                         El pulso de tu campus.
                     </h1>
 
-                    <p
-                        class="mt-2 max-w-xl text-sm leading-6 text-[#80656C]"
-                    >
-                        Tus solicitudes, su tiempo y lo que necesita
-                        atención ahora mismo.
+                    <p class="mt-2 max-w-xl text-sm leading-6 text-[#80656C]">
+                        Tus solicitudes, su tiempo y lo que necesita atención
+                        ahora mismo.
                     </p>
                 </div>
 
@@ -175,18 +169,17 @@ const anchoTiempo = (solicitud: Solicitud) => {
         <div
             class="grid gap-5 px-6 py-7 md:px-10 xl:grid-cols-[minmax(0,1.65fr)_minmax(280px,0.75fr)]"
         >
-
             <!-- CAMPUS PULSE -->
             <section
                 class="relative overflow-hidden rounded-[28px] bg-[#7D1730] p-6 text-white shadow-[0_18px_50px_rgba(82,19,35,0.14)] md:p-8"
             >
                 <!-- Decoración -->
                 <div
-                    class="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full border border-white/10"
+                    class="pointer-events-none absolute -top-24 -right-20 size-72 rounded-full border border-white/10"
                 ></div>
 
                 <div
-                    class="pointer-events-none absolute -right-5 -top-5 size-40 rounded-full border border-white/10"
+                    class="pointer-events-none absolute -top-5 -right-5 size-40 rounded-full border border-white/10"
                 ></div>
 
                 <div class="relative">
@@ -195,7 +188,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                             <Radio class="size-4 text-[#F6B8C7]" />
 
                             <span
-                                class="text-xs font-bold uppercase tracking-[0.2em] text-[#F6CFD8]"
+                                class="text-xs font-bold tracking-[0.2em] text-[#F6CFD8] uppercase"
                             >
                                 Campus Pulse
                             </span>
@@ -209,13 +202,8 @@ const anchoTiempo = (solicitud: Solicitud) => {
                     </div>
 
                     <!-- SI HAY SOS ACTIVOS -->
-                    <div
-                        v-if="activas().length > 0"
-                        class="mt-10"
-                    >
-                        <p
-                            class="text-sm font-medium text-white/60"
-                        >
+                    <div v-if="activas().length > 0" class="mt-10">
+                        <p class="text-sm font-medium text-white/60">
                             Necesita atención ahora
                         </p>
 
@@ -244,7 +232,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                         >
                             <div>
                                 <p
-                                    class="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50"
+                                    class="text-[11px] font-bold tracking-[0.2em] text-white/50 uppercase"
                                 >
                                     Tiempo restante
                                 </p>
@@ -252,11 +240,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                                 <p
                                     class="mt-1 text-4xl font-semibold tracking-tight"
                                 >
-                                    {{
-                                        tiempoRestante(
-                                            activas()[0].expira_en
-                                        )
-                                    }}
+                                    {{ tiempoRestante(activas()[0].expira_en) }}
                                 </p>
                             </div>
 
@@ -267,9 +251,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                                     <div
                                         class="h-full rounded-full bg-[#F5C1CD] transition-all"
                                         :style="{
-                                            width: anchoTiempo(
-                                                activas()[0]
-                                            ),
+                                            width: anchoTiempo(activas()[0]),
                                         }"
                                     ></div>
                                 </div>
@@ -280,7 +262,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                                     <span>
                                         {{
                                             formatearHora(
-                                                activas()[0].inicia_en
+                                                activas()[0].inicia_en,
                                             )
                                         }}
                                     </span>
@@ -288,7 +270,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                                     <span>
                                         {{
                                             formatearHora(
-                                                activas()[0].expira_en
+                                                activas()[0].expira_en,
                                             )
                                         }}
                                     </span>
@@ -298,20 +280,12 @@ const anchoTiempo = (solicitud: Solicitud) => {
                     </div>
 
                     <!-- SIN ACTIVOS -->
-                    <div
-                        v-else
-                        class="mt-12 max-w-lg"
-                    >
-                        <p class="text-5xl font-semibold">
-                            Todo tranquilo.
-                        </p>
+                    <div v-else class="mt-12 max-w-lg">
+                        <p class="text-5xl font-semibold">Todo tranquilo.</p>
 
-                        <p
-                            class="mt-4 text-sm leading-6 text-white/65"
-                        >
-                            No tienes ningún SOS activo en este momento.
-                            Puedes programar uno o publicar una necesidad
-                            inmediata.
+                        <p class="mt-4 text-sm leading-6 text-white/65">
+                            No tienes ningún SOS activo en este momento. Puedes
+                            programar uno o publicar una necesidad inmediata.
                         </p>
 
                         <Link
@@ -326,11 +300,9 @@ const anchoTiempo = (solicitud: Solicitud) => {
             </section>
 
             <!-- ACTIVIDAD -->
-            <aside
-                class="rounded-[28px] border border-[#E9DDE0] bg-white p-6"
-            >
+            <aside class="rounded-[28px] border border-[#E9DDE0] bg-white p-6">
                 <p
-                    class="text-xs font-bold uppercase tracking-[0.18em] text-[#A06A78]"
+                    class="text-xs font-bold tracking-[0.18em] text-[#A06A78] uppercase"
                 >
                     Tu actividad
                 </p>
@@ -342,9 +314,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                         {{ estadisticas.total.toString().padStart(2, '0') }}
                     </span>
 
-                    <p class="mt-2 text-sm text-[#82666E]">
-                        SOS publicados
-                    </p>
+                    <p class="mt-2 text-sm text-[#82666E]">SOS publicados</p>
                 </div>
 
                 <div class="my-7 h-px bg-[#EEE4E6]"></div>
@@ -414,12 +384,10 @@ const anchoTiempo = (solicitud: Solicitud) => {
                 <div
                     class="rounded-[28px] border border-[#E9DDE0] bg-white p-6 md:p-8"
                 >
-                    <div
-                        class="flex items-center justify-between"
-                    >
+                    <div class="flex items-center justify-between">
                         <div>
                             <p
-                                class="text-xs font-bold uppercase tracking-[0.18em] text-[#A06A78]"
+                                class="text-xs font-bold tracking-[0.18em] text-[#A06A78] uppercase"
                             >
                                 Próximamente
                             </p>
@@ -431,40 +399,25 @@ const anchoTiempo = (solicitud: Solicitud) => {
                             </h2>
                         </div>
 
-                        <CalendarDays
-                            class="size-5 text-[#8B1736]"
-                        />
+                        <CalendarDays class="size-5 text-[#8B1736]" />
                     </div>
 
                     <!-- TIMELINE -->
-                    <div
-                        v-if="programadas().length > 0"
-                        class="mt-8"
-                    >
+                    <div v-if="programadas().length > 0" class="mt-8">
                         <div
                             v-for="solicitud in programadas()"
                             :key="solicitud.id"
                             class="grid grid-cols-[62px_20px_1fr] gap-3"
                         >
                             <div class="pt-1 text-right">
-                                <p
-                                    class="text-xs font-bold text-[#9A6472]"
-                                >
-                                    {{
-                                        formatearDia(
-                                            solicitud.inicia_en
-                                        )
-                                    }}
+                                <p class="text-xs font-bold text-[#9A6472]">
+                                    {{ formatearDia(solicitud.inicia_en) }}
                                 </p>
 
                                 <p
                                     class="mt-1 text-sm font-semibold text-[#4E2832]"
                                 >
-                                    {{
-                                        formatearHora(
-                                            solicitud.inicia_en
-                                        )
-                                    }}
+                                    {{ formatearHora(solicitud.inicia_en) }}
                                 </p>
                             </div>
 
@@ -479,9 +432,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                             </div>
 
                             <div class="pb-7">
-                                <p
-                                    class="font-semibold text-[#431923]"
-                                >
+                                <p class="font-semibold text-[#431923]">
                                     {{ solicitud.titulo }}
                                 </p>
 
@@ -495,17 +446,14 @@ const anchoTiempo = (solicitud: Solicitud) => {
                         </div>
                     </div>
 
-                    <div
-                        v-else
-                        class="mt-8 rounded-2xl bg-[#FBF6F7] px-5 py-7"
-                    >
+                    <div v-else class="mt-8 rounded-2xl bg-[#FBF6F7] px-5 py-7">
                         <p class="text-sm font-medium text-[#654650]">
                             No tienes SOS programados.
                         </p>
 
                         <p class="mt-1 text-xs text-[#967982]">
-                            Cuando programes uno, aparecerá aquí
-                            como parte de tu agenda.
+                            Cuando programes uno, aparecerá aquí como parte de
+                            tu agenda.
                         </p>
                     </div>
                 </div>
@@ -516,7 +464,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
                     class="group relative flex min-h-64 flex-col justify-between overflow-hidden rounded-[28px] bg-[#EEDDE1] p-7 transition hover:-translate-y-1"
                 >
                     <div
-                        class="absolute -right-16 -top-16 size-52 rounded-full border border-[#CDA8B2]/50"
+                        class="absolute -top-16 -right-16 size-52 rounded-full border border-[#CDA8B2]/50"
                     ></div>
 
                     <div
@@ -527,7 +475,7 @@ const anchoTiempo = (solicitud: Solicitud) => {
 
                     <div class="relative">
                         <p
-                            class="text-xs font-bold uppercase tracking-[0.18em] text-[#9B5D6D]"
+                            class="text-xs font-bold tracking-[0.18em] text-[#9B5D6D] uppercase"
                         >
                             ¿Necesitas algo?
                         </p>
@@ -541,8 +489,8 @@ const anchoTiempo = (solicitud: Solicitud) => {
                         <p
                             class="mt-2 max-w-xs text-sm leading-6 text-[#80616A]"
                         >
-                            Dile a tu comunidad qué necesitas y durante
-                            cuánto tiempo.
+                            Dile a tu comunidad qué necesitas y durante cuánto
+                            tiempo.
                         </p>
 
                         <div

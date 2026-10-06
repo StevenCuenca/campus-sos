@@ -52,9 +52,7 @@ const publicar = () => {
     // calculamos automáticamente el inicio y el final.
     if (modoTiempo.value === 'ahora') {
         const inicio = new Date();
-        const fin = new Date(
-            inicio.getTime() + duracion.value * 60 * 1000,
-        );
+        const fin = new Date(inicio.getTime() + duracion.value * 60 * 1000);
 
         form.inicia_en = formatearFecha(inicio);
         form.expira_en = formatearFecha(fin);
@@ -68,12 +66,9 @@ const publicar = () => {
     <Head title="Publicar SOS" />
 
     <div class="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4">
-
         <!-- Encabezado -->
         <div>
-            <h1 class="text-2xl font-bold">
-                Publicar un SOS
-            </h1>
+            <h1 class="text-2xl font-bold">Publicar un SOS</h1>
 
             <p class="mt-1 text-sm text-muted-foreground">
                 Cuéntale a la comunidad universitaria qué necesitas.
@@ -97,10 +92,7 @@ const publicar = () => {
                     class="w-full rounded-lg border bg-background px-3 py-2"
                 />
 
-                <p
-                    v-if="form.errors.titulo"
-                    class="mt-1 text-sm text-red-500"
-                >
+                <p v-if="form.errors.titulo" class="mt-1 text-sm text-red-500">
                     {{ form.errors.titulo }}
                 </p>
             </div>
@@ -136,29 +128,17 @@ const publicar = () => {
                     v-model="form.categoria"
                     class="w-full rounded-lg border bg-background px-3 py-2"
                 >
-                    <option value="" disabled>
-                        Selecciona una categoría
-                    </option>
+                    <option value="" disabled>Selecciona una categoría</option>
 
-                    <option value="prestamo">
-                        Préstamo
-                    </option>
+                    <option value="prestamo">Préstamo</option>
 
-                    <option value="academico">
-                        Ayuda académica
-                    </option>
+                    <option value="academico">Ayuda académica</option>
 
-                    <option value="tecnologia">
-                        Tecnología
-                    </option>
+                    <option value="tecnologia">Tecnología</option>
 
-                    <option value="companero">
-                        Buscar compañero
-                    </option>
+                    <option value="companero">Buscar compañero</option>
 
-                    <option value="otro">
-                        Otro
-                    </option>
+                    <option value="otro">Otro</option>
                 </select>
 
                 <p
@@ -200,26 +180,18 @@ const publicar = () => {
                     v-model="form.urgencia"
                     class="w-full rounded-lg border bg-background px-3 py-2"
                 >
-                    <option value="baja">
-                        🟢 Baja
-                    </option>
+                    <option value="baja">🟢 Baja</option>
 
-                    <option value="media">
-                        🟡 Media
-                    </option>
+                    <option value="media">🟡 Media</option>
 
-                    <option value="alta">
-                        🔴 Alta
-                    </option>
+                    <option value="alta">🔴 Alta</option>
                 </select>
             </div>
 
             <!-- TIEMPO -->
             <div class="space-y-4 border-t pt-6">
                 <div>
-                    <h2 class="font-semibold">
-                        ¿Cuándo necesitas ayuda?
-                    </h2>
+                    <h2 class="font-semibold">¿Cuándo necesitas ayuda?</h2>
 
                     <p class="text-sm text-muted-foreground">
                         Define durante cuánto tiempo estará vigente tu SOS.
@@ -238,9 +210,7 @@ const publicar = () => {
                         "
                         @click="modoTiempo = 'ahora'"
                     >
-                        <div class="font-semibold">
-                            ⚡ Lo necesito ahora
-                        </div>
+                        <div class="font-semibold">⚡ Lo necesito ahora</div>
 
                         <div class="mt-1 text-xs text-muted-foreground">
                             La solicitud comienza inmediatamente.
@@ -257,9 +227,7 @@ const publicar = () => {
                         "
                         @click="modoTiempo = 'programar'"
                     >
-                        <div class="font-semibold">
-                            📅 Programar
-                        </div>
+                        <div class="font-semibold">📅 Programar</div>
 
                         <div class="mt-1 text-xs text-muted-foreground">
                             Necesitaré ayuda más tarde.
@@ -362,11 +330,7 @@ const publicar = () => {
                     :disabled="form.processing"
                     class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
                 >
-                    {{
-                        form.processing
-                            ? 'Publicando...'
-                            : 'Publicar SOS'
-                    }}
+                    {{ form.processing ? 'Publicando...' : 'Publicar SOS' }}
                 </button>
             </div>
         </form>
