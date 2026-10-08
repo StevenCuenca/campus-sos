@@ -51,20 +51,29 @@ const settingsNavItems: NavItem[] = [
         variant="inset"
         class="border-r border-[#64152A]/20"
     >
-        <!-- LOGO -->
+        <!-- LOGO CAMPUSSOS -->
         <SidebarHeader class="pt-4">
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child class="h-auto py-3">
-                        <Link :href="dashboard()">
+                        <Link
+                            :href="dashboard()"
+                            class="flex items-center gap-3"
+                        >
+                            <!-- ICONO -->
                             <div
-                                class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#7A1631] text-lg font-bold text-white shadow-sm"
+                                class="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl shadow-sm"
                             >
-                                S
+                                <img
+                                    src="/images/campussos-icon.png"
+                                    alt="CampusSOS"
+                                    class="h-full w-full object-cover"
+                                />
                             </div>
 
+                            <!-- MARCA -->
                             <div
-                                class="grid flex-1 text-left leading-tight group-data-[collapsible=icon]:hidden"
+                                class="grid min-w-0 flex-1 text-left leading-tight group-data-[collapsible=icon]:hidden"
                             >
                                 <span
                                     class="truncate text-lg font-bold text-[#7A1631] dark:text-[#F4DCE3]"
@@ -84,7 +93,7 @@ const settingsNavItems: NavItem[] = [
             </SidebarMenu>
         </SidebarHeader>
 
-        <!-- NAVEGACIÓN -->
+        <!-- NAVEGACIÓN PRINCIPAL -->
         <SidebarContent class="px-2">
             <div
                 class="mt-4 mb-2 px-2 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase group-data-[collapsible=icon]:hidden"
