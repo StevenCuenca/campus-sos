@@ -8,9 +8,6 @@ import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/routes';
 import { update } from '@/routes/password';
 
-defineOptions({
-    layout: null,
-});
 
 const props = defineProps<{
     token: string;

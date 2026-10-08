@@ -10,10 +10,6 @@ import { store } from '@/routes/register';
 defineProps<{
     passwordRules: string;
 }>();
-
-defineOptions({
-    layout: null,
-});
 </script>
 
 <template>
@@ -29,18 +25,15 @@ defineOptions({
             <section
                 class="relative flex min-h-[700px] flex-col overflow-hidden bg-[#681f35] text-white"
             >
-                <!-- FOTO DEL CAMPUS -->
                 <div
                     class="absolute inset-0 bg-cover bg-center"
                     style="background-image: url('/images/campus-bg.jpg')"
                 ></div>
 
-                <!-- CAPA VINO -->
                 <div
                     class="absolute inset-0 bg-gradient-to-b from-[#681f35]/95 via-[#681f35]/88 to-[#681f35]/95"
                 ></div>
 
-                <!-- DECORACIONES -->
                 <div
                     class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#9a405b]/25"
                 ></div>
@@ -50,7 +43,6 @@ defineOptions({
                 ></div>
 
                 <div class="relative z-10 flex h-full flex-1 flex-col">
-                    <!-- LOGO -->
                     <div class="flex justify-center px-10 pt-10">
                         <img
                             src="/images/campussos-logo.png"
@@ -59,7 +51,6 @@ defineOptions({
                         />
                     </div>
 
-                    <!-- TEXTO -->
                     <div class="px-10 pt-9 lg:px-12">
                         <h1
                             class="max-w-sm text-4xl leading-[1.08] font-bold tracking-tight"
@@ -78,12 +69,10 @@ defineOptions({
 
                     <div class="flex-1"></div>
 
-                    <!-- CURVA -->
                     <div
                         class="absolute -bottom-28 -left-28 h-64 w-[140%] rotate-[6deg] rounded-[50%] bg-[#8d2948]/65"
                     ></div>
 
-                    <!-- BENEFICIOS -->
                     <div
                         class="relative z-10 grid grid-cols-3 gap-4 px-8 pt-16 pb-9 text-center"
                     >
@@ -93,7 +82,6 @@ defineOptions({
                             >
                                 <span class="text-lg">♡</span>
                             </div>
-
                             <p class="text-xs font-bold">Ayuda</p>
                             <p class="mt-1 text-[10px] leading-4 text-white/65">
                                 a tu comunidad
@@ -106,7 +94,6 @@ defineOptions({
                             >
                                 <span class="text-lg">✓</span>
                             </div>
-
                             <p class="text-xs font-bold">Acceso seguro</p>
                             <p class="mt-1 text-[10px] leading-4 text-white/65">
                                 y confiable
@@ -119,7 +106,6 @@ defineOptions({
                             >
                                 <span class="text-lg">◇</span>
                             </div>
-
                             <p class="text-xs font-bold">Conecta</p>
                             <p class="mt-1 text-[10px] leading-4 text-white/65">
                                 con estudiantes
@@ -134,7 +120,6 @@ defineOptions({
                 class="flex min-h-[700px] items-center justify-center px-8 py-10 sm:px-14"
             >
                 <div class="w-full max-w-sm">
-                    <!-- ENCABEZADO -->
                     <div class="mb-7">
                         <p class="mb-2 text-sm font-semibold text-[#8d5263]">
                             ÚNETE A CAMPUSSOS
@@ -152,7 +137,6 @@ defineOptions({
                         </p>
                     </div>
 
-                    <!-- FORMULARIO -->
                     <Form
                         v-bind="store.form()"
                         :reset-on-success="[
@@ -162,7 +146,6 @@ defineOptions({
                         v-slot="{ errors, processing }"
                         class="space-y-4"
                     >
-                        <!-- NOMBRE -->
                         <div>
                             <label
                                 for="name"
@@ -183,10 +166,12 @@ defineOptions({
                                 class="h-12 rounded-xl border-[#ddd1d4] bg-white px-4"
                             />
 
-                            <InputError :message="errors.name" class="mt-2" />
+                            <InputError
+                                :message="errors.name"
+                                class="mt-2"
+                            />
                         </div>
 
-                        <!-- EMAIL -->
                         <div>
                             <label
                                 for="email"
@@ -206,10 +191,12 @@ defineOptions({
                                 class="h-12 rounded-xl border-[#ddd1d4] bg-white px-4"
                             />
 
-                            <InputError :message="errors.email" class="mt-2" />
+                            <InputError
+                                :message="errors.email"
+                                class="mt-2"
+                            />
                         </div>
 
-                        <!-- CONTRASEÑA -->
                         <div>
                             <label
                                 for="password"
@@ -235,7 +222,6 @@ defineOptions({
                             />
                         </div>
 
-                        <!-- CONFIRMAR CONTRASEÑA -->
                         <div>
                             <label
                                 for="password_confirmation"
@@ -261,7 +247,6 @@ defineOptions({
                             />
                         </div>
 
-                        <!-- BOTÓN -->
                         <button
                             type="submit"
                             :tabindex="5"
@@ -274,7 +259,6 @@ defineOptions({
                         </button>
                     </Form>
 
-                    <!-- VOLVER AL LOGIN -->
                     <div class="my-6 h-px bg-[#eee5e7]"></div>
 
                     <div class="text-center">

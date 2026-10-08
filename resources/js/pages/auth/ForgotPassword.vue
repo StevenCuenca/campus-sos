@@ -6,9 +6,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
 
-defineOptions({
-    layout: null,
-});
+
 
 defineProps<{
     status?: string;

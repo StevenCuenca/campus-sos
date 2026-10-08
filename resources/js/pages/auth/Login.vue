@@ -2,17 +2,12 @@
 import { Form, Head, Link } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
-import TextLink from '@/components/TextLink.vue';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-
-defineOptions({
-    layout: null,
-});
 
 defineProps<{
     status?: string;
@@ -80,7 +75,6 @@ defineProps<{
                         </p>
                     </div>
 
-                    <!-- ESPACIO FLEXIBLE -->
                     <div class="flex-1"></div>
 
                     <!-- CURVA DECORATIVA -->
@@ -92,7 +86,6 @@ defineProps<{
                     <div
                         class="relative z-10 grid grid-cols-3 gap-4 px-8 pt-16 pb-9 text-center"
                     >
-                        <!-- CONECTA -->
                         <div class="flex flex-col items-center">
                             <div
                                 class="mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/30"
@@ -107,7 +100,6 @@ defineProps<{
                             </p>
                         </div>
 
-                        <!-- SEGURIDAD -->
                         <div class="flex flex-col items-center">
                             <div
                                 class="mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/30"
@@ -122,7 +114,6 @@ defineProps<{
                             </p>
                         </div>
 
-                        <!-- ESTUDIANTES -->
                         <div class="flex flex-col items-center">
                             <div
                                 class="mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/30"
@@ -197,10 +188,13 @@ defineProps<{
                                 class="h-12 rounded-xl border-[#ddd1d4] bg-white px-4"
                             />
 
-                            <InputError :message="errors.email" class="mt-2" />
+                            <InputError
+                                :message="errors.email"
+                                class="mt-2"
+                            />
                         </div>
 
-                        <!-- PASSWORD -->
+                        <!-- CONTRASEÑA -->
                         <div>
                             <div class="mb-2 flex items-center justify-between">
                                 <label
@@ -250,7 +244,7 @@ defineProps<{
                             Recordarme
                         </label>
 
-                        <!-- BOTÓN LOGIN -->
+                        <!-- BOTÓN -->
                         <button
                             type="submit"
                             :tabindex="4"
