@@ -8,7 +8,6 @@ import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/routes';
 import { update } from '@/routes/password';
 
-
 const props = defineProps<{
     token: string;
     email: string;

@@ -166,10 +166,7 @@ defineProps<{
                                 class="h-12 rounded-xl border-[#ddd1d4] bg-white px-4"
                             />
 
-                            <InputError
-                                :message="errors.name"
-                                class="mt-2"
-                            />
+                            <InputError :message="errors.name" class="mt-2" />
                         </div>
 
                         <div>
@@ -191,10 +188,7 @@ defineProps<{
                                 class="h-12 rounded-xl border-[#ddd1d4] bg-white px-4"
                             />
 
-                            <InputError
-                                :message="errors.email"
-                                class="mt-2"
-                            />
+                            <InputError :message="errors.email" class="mt-2" />
                         </div>
 
                         <div>
