@@ -1,0 +1,102 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.ranking {
+    width: 100%;
+    min-height: 100vh;
+    padding: $spacing-xl;
+    background: $color-background;
+
+    // FLEXBOX
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: $spacing-lg;
+        margin-bottom: $spacing-xl;
+    }
+
+    &__eyebrow {
+        margin: 0 0 $spacing-sm;
+        color: $color-primary;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+    }
+
+    &__title {
+        margin: 0;
+        color: $color-text;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    &__description {
+        margin: $spacing-sm 0 0;
+        color: $color-text-secondary;
+    }
+
+    &__period {
+        padding: 10px 16px;
+        color: $color-primary;
+        font-weight: 600;
+        background: $color-surface;
+        border: 1px solid $color-border;
+        border-radius: $border-radius-sm;
+        cursor: pointer;
+
+        &:hover {
+            background: $color-accent;
+        }
+    }
+
+    // CSS GRID: 4 tarjetas en escritorio
+    &__summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: $spacing-md;
+        margin-bottom: $spacing-lg;
+    }
+
+    // CSS GRID: tabla + gráfico
+    &__content {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: $spacing-lg;
+    }
+
+    // TABLET
+    @include tablet {
+        padding: $spacing-lg;
+
+        &__summary {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        &__content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    // MÓVIL
+    @include mobile {
+        padding: $spacing-md;
+
+        &__header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        &__title {
+            font-size: 1.6rem;
+        }
+
+        &__period {
+            width: 100%;
+        }
+
+        &__summary {
+            grid-template-columns: 1fr;
+        }
+    }
+}

@@ -1,6 +1,18 @@
+
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { Home, PlusCircle, ClipboardList, Settings } from '@lucide/vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+import {
+    Home,
+    PlusCircle,
+    ClipboardList,
+    Trophy,
+    Settings,
+    LayoutDashboard,
+    Building2,
+    Users,
+} from '@lucide/vue';
 
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -18,7 +30,22 @@ import {
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
-const mainNavItems: NavItem[] = [
+// Obtenemos la información compartida por Inertia
+const page = usePage();
+
+// Comprobamos si el usuario es administrador
+const esAdmin = computed(() => {
+    const auth = page.props.auth as {
+        user?: {
+            role?: string;
+        };
+    };
+
+    return auth?.user?.role === 'admin';
+});
+
+// Menú del estudiante
+const estudianteNavItems: NavItem[] = [
     {
         title: 'Inicio',
         href: dashboard(),
@@ -34,7 +61,41 @@ const mainNavItems: NavItem[] = [
         href: '/solicitudes',
         icon: ClipboardList,
     },
+    {
+        title: 'Ranking',
+        href: '/ranking',
+        icon: Trophy,
+    },
 ];
+
+// Menú del administrador
+const adminNavItems: NavItem[] = [
+    {
+        title: 'Panel administrativo',
+        href: '/admin',
+        icon: LayoutDashboard,
+    },
+    {
+        title: 'Facultades',
+        href: '/admin/facultades',
+        icon: Building2,
+    },
+    {
+        title: 'Estudiantes',
+        href: '/admin/estudiantes',
+        icon: Users,
+    },
+    {
+        title: 'Ranking',
+        href: '/ranking',
+        icon: Trophy,
+    },
+];
+
+// Elegimos el menú dependiendo del rol
+const mainNavItems = computed(() =>
+    esAdmin.value ? adminNavItems : estudianteNavItems,
+);
 
 const settingsNavItems: NavItem[] = [
     {
@@ -57,7 +118,7 @@ const settingsNavItems: NavItem[] = [
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child class="h-auto py-3">
                         <Link
-                            :href="dashboard()"
+                            :href="esAdmin ? '/admin' : dashboard()"
                             class="flex items-center gap-3"
                         >
                             <!-- ICONO -->
@@ -78,13 +139,17 @@ const settingsNavItems: NavItem[] = [
                                 <span
                                     class="truncate text-lg font-bold text-[#7A1631] dark:text-[#F4DCE3]"
                                 >
-                                    CampusSOS
+                                    {{ esAdmin ? 'CampusSOS Admin' : 'CampusSOS' }}
                                 </span>
 
                                 <span
                                     class="truncate text-xs text-muted-foreground"
                                 >
-                                    Comunidad que ayuda
+                                    {{
+                                        esAdmin
+                                            ? 'Core de Colaboración'
+                                            : 'Comunidad que ayuda'
+                                    }}
                                 </span>
                             </div>
                         </Link>
@@ -98,7 +163,7 @@ const settingsNavItems: NavItem[] = [
             <div
                 class="mt-4 mb-2 px-2 text-[11px] font-semibold tracking-widest text-muted-foreground uppercase group-data-[collapsible=icon]:hidden"
             >
-                Principal
+                {{ esAdmin ? 'Administración' : 'Principal' }}
             </div>
 
             <NavMain :items="mainNavItems" />

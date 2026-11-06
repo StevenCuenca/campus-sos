@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -51,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Solicitud::class);
     }
+
+    public function facultad(): BelongsTo
+{
+    return $this->belongsTo(Facultad::class, 'facultad_id');
+}
 }

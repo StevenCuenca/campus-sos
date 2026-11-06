@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
+import {
+    CalendarDays,
+    Clock,
+    MapPin,
+    Pencil,
+    Plus,
+    Trash2,
+} from '@lucide/vue';
 
 interface Solicitud {
     id: number;
@@ -7,193 +15,250 @@ interface Solicitud {
     descripcion: string;
     categoria: string;
     ubicacion: string;
-    urgencia: string;
-    estado_temporal: 'programada' | 'activa' | 'expirada';
+    urgencia: 'baja' | 'media' | 'alta';
     inicia_en: string | null;
     expira_en: string | null;
+    estado_temporal: 'programada' | 'activa' | 'expirada';
 }
 
 defineProps<{
     solicitudes: Solicitud[];
 }>();
 
-defineOptions({
-    layout: {
-        breadcrumbs: [
-            {
-                title: 'Solicitudes',
-                href: '/solicitudes',
-            },
-        ],
-    },
-});
+const formatearFecha = (fecha: string | null) => {
+    if (!fecha) {
+        return 'Sin fecha';
+    }
+
+    return new Intl.DateTimeFormat('es-EC', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+    }).format(new Date(fecha));
+};
 
 const eliminarSolicitud = (id: number) => {
-    if (confirm('¿Estás seguro de eliminar esta solicitud?')) {
-        router.delete(`/solicitudes/${id}`);
-    }
-};
+    const confirmar = window.confirm(
+        '¿Estás seguro de que deseas eliminar esta solicitud?',
+    );
 
-const textoEstado = (estado: string) => {
-    if (estado === 'programada') return '📅 Programada';
-    if (estado === 'expirada') return '⏱ Expirada';
-
-    return '🟢 Activa';
-};
-
-const claseEstado = (estado: string) => {
-    if (estado === 'programada') {
-        return 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300';
+    if (!confirmar) {
+        return;
     }
 
-    if (estado === 'expirada') {
-        return 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300';
-    }
-
-    return 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300';
-};
-
-const claseUrgencia = (urgencia: string) => {
-    if (urgencia === 'alta') {
-        return 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300';
-    }
-
-    if (urgencia === 'media') {
-        return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300';
-    }
-
-    return 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300';
-};
-
-const formatearFecha = (fecha: string | null) => {
-    if (!fecha) return 'Sin definir';
-
-    return new Date(fecha).toLocaleString('es-EC', {
-        dateStyle: 'short',
-        timeStyle: 'short',
-    });
+    router.delete(`/solicitudes/${id}`);
 };
 </script>
 
 <template>
-    <Head title="Mis Solicitudes" />
-
-    <div class="flex h-full flex-1 flex-col gap-6 p-4">
+    <main class="min-h-screen bg-[#F8F5F3] p-4 md:p-8">
         <!-- ENCABEZADO -->
-        <div class="flex items-center justify-between">
+        <section
+            class="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+        >
             <div>
-                <h1 class="text-2xl font-bold">Mis SOS</h1>
+                <p
+                    class="mb-2 text-xs font-bold tracking-widest text-[#7A1631] uppercase"
+                >
+                    CampusSOS
+                </p>
 
-                <p class="text-sm text-muted-foreground">
-                    Administra tus solicitudes de ayuda.
+                <h1
+                    class="text-2xl font-bold text-[#30171E] md:text-3xl"
+                >
+                    Mis SOS
+                </h1>
+
+                <p class="mt-2 text-sm text-[#6F6266]">
+                    Administra las solicitudes de ayuda que has publicado.
                 </p>
             </div>
 
             <Link
                 href="/solicitudes/create"
-                class="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+                class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#7A1631] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#5E1025]"
             >
-                + Publicar SOS
+                <Plus class="size-4" />
+                Publicar SOS
             </Link>
-        </div>
+        </section>
 
         <!-- SIN SOLICITUDES -->
-        <div
+        <section
             v-if="solicitudes.length === 0"
-            class="rounded-2xl border p-10 text-center"
+            class="rounded-2xl border border-[#E8DFE1] bg-white p-10 text-center shadow-sm"
         >
-            <div class="text-4xl">🆘</div>
+            <div
+                class="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-[#F4E8EC] text-[#7A1631]"
+            >
+                <Plus class="size-6" />
+            </div>
 
-            <h2 class="mt-3 text-lg font-semibold">
-                Todavía no tienes solicitudes
+            <h2 class="text-lg font-bold text-[#30171E]">
+                Aún no tienes solicitudes
             </h2>
 
-            <p class="mt-1 text-sm text-muted-foreground">
-                Publica tu primer SOS y pide ayuda a la comunidad.
+            <p class="mt-2 text-sm text-[#6F6266]">
+                Publica tu primer SOS para solicitar ayuda a la comunidad.
             </p>
-        </div>
 
-        <!-- SOLICITUDES -->
-        <div v-else class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <Link
+                href="/solicitudes/create"
+                class="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#7A1631] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#5E1025]"
+            >
+                <Plus class="size-4" />
+                Crear solicitud
+            </Link>
+        </section>
+
+        <!-- LISTADO DE SOLICITUDES -->
+        <section
+            v-else
+            class="grid grid-cols-1 gap-5 lg:grid-cols-2"
+        >
             <article
                 v-for="solicitud in solicitudes"
                 :key="solicitud.id"
-                class="rounded-2xl border p-5 shadow-sm transition hover:shadow-md"
+                class="rounded-2xl border border-[#E8DFE1] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
             >
-                <!-- BADGES -->
-                <div class="mb-4 flex items-center justify-between gap-2">
-                    <span
-                        class="rounded-full px-3 py-1 text-xs font-semibold"
-                        :class="claseEstado(solicitud.estado_temporal)"
-                    >
-                        {{ textoEstado(solicitud.estado_temporal) }}
-                    </span>
+                <!-- PARTE SUPERIOR -->
+                <div
+                    class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+                >
+                    <div>
+                        <div class="mb-2 flex flex-wrap gap-2">
+                            <!-- ESTADO -->
+                            <span
+                                class="rounded-full px-3 py-1 text-xs font-semibold"
+                                :class="{
+                                    'bg-green-100 text-green-700':
+                                        solicitud.estado_temporal === 'activa',
 
-                    <span
-                        class="rounded-full px-3 py-1 text-xs font-semibold capitalize"
-                        :class="claseUrgencia(solicitud.urgencia)"
-                    >
-                        {{ solicitud.urgencia }}
-                    </span>
+                                    'bg-blue-100 text-blue-700':
+                                        solicitud.estado_temporal ===
+                                        'programada',
+
+                                    'bg-gray-100 text-gray-600':
+                                        solicitud.estado_temporal === 'expirada',
+                                }"
+                            >
+                                {{ solicitud.estado_temporal }}
+                            </span>
+
+                            <!-- URGENCIA -->
+                            <span
+                                class="rounded-full px-3 py-1 text-xs font-semibold"
+                                :class="{
+                                    'bg-red-100 text-red-700':
+                                        solicitud.urgencia === 'alta',
+
+                                    'bg-yellow-100 text-yellow-700':
+                                        solicitud.urgencia === 'media',
+
+                                    'bg-green-100 text-green-700':
+                                        solicitud.urgencia === 'baja',
+                                }"
+                            >
+                                Urgencia {{ solicitud.urgencia }}
+                            </span>
+                        </div>
+
+                        <h2
+                            class="text-lg font-bold text-[#30171E]"
+                        >
+                            {{ solicitud.titulo }}
+                        </h2>
+
+                        <p
+                            class="mt-1 text-xs font-semibold text-[#7A1631]"
+                        >
+                            {{ solicitud.categoria }}
+                        </p>
+                    </div>
                 </div>
 
-                <!-- INFORMACIÓN -->
-                <h2 class="text-lg font-bold">
-                    {{ solicitud.titulo }}
-                </h2>
-
-                <p class="mt-2 text-sm text-muted-foreground">
+                <!-- DESCRIPCIÓN -->
+                <p
+                    class="mb-5 text-sm leading-relaxed text-[#6F6266]"
+                >
                     {{ solicitud.descripcion }}
                 </p>
 
-                <div class="mt-5 space-y-2 text-sm">
-                    <p>
-                        📂
-                        <span class="font-medium">
-                            {{ solicitud.categoria }}
+                <!-- INFORMACIÓN -->
+                <div
+                    class="mb-5 space-y-3 border-t border-[#E8DFE1] pt-4"
+                >
+                    <div
+                        class="flex items-center gap-2 text-sm text-[#6F6266]"
+                    >
+                        <MapPin
+                            class="size-4 shrink-0 text-[#7A1631]"
+                        />
+
+                        <span>
+                            {{ solicitud.ubicacion }}
                         </span>
-                    </p>
+                    </div>
 
-                    <p>📍 {{ solicitud.ubicacion }}</p>
+                    <div
+                        class="flex items-center gap-2 text-sm text-[#6F6266]"
+                    >
+                        <CalendarDays
+                            class="size-4 shrink-0 text-[#7A1631]"
+                        />
 
-                    <p>
-                        🕐 Inicio:
-                        {{ formatearFecha(solicitud.inicia_en) }}
-                    </p>
+                        <span>
+                            Inicia:
+                            {{ formatearFecha(solicitud.inicia_en) }}
+                        </span>
+                    </div>
 
-                    <p>
-                        ⏳ Fin:
-                        {{ formatearFecha(solicitud.expira_en) }}
-                    </p>
+                    <div
+                        class="flex items-center gap-2 text-sm text-[#6F6266]"
+                    >
+                        <Clock
+                            class="size-4 shrink-0 text-[#7A1631]"
+                        />
+
+                        <span>
+                            Expira:
+                            {{ formatearFecha(solicitud.expira_en) }}
+                        </span>
+                    </div>
                 </div>
 
                 <!-- ACCIONES -->
-                <div class="mt-5 flex gap-2 border-t pt-4">
-                    <!-- SOLO EDITABLE SI NO EXPIRÓ -->
+                <div
+                    class="flex flex-col gap-2 border-t border-[#E8DFE1] pt-4 sm:flex-row sm:justify-end"
+                >
                     <Link
-                        v-if="solicitud.estado_temporal !== 'expirada'"
+                        v-if="
+                            solicitud.estado_temporal !== 'expirada'
+                        "
                         :href="`/solicitudes/${solicitud.id}/edit`"
-                        class="rounded-lg border px-3 py-2 text-sm font-medium"
+                        class="inline-flex items-center justify-center gap-2 rounded-lg border border-[#7A1631]/20 px-4 py-2 text-sm font-semibold text-[#7A1631] transition hover:bg-[#F4E8EC]"
                     >
-                        ✏️ Editar
+                        <Pencil class="size-4" />
+                        Editar
                     </Link>
-
-                    <span
-                        v-else
-                        class="cursor-not-allowed rounded-lg border px-3 py-2 text-sm text-muted-foreground"
-                    >
-                        🔒 No editable
-                    </span>
 
                     <button
                         type="button"
-                        class="rounded-lg border px-3 py-2 text-sm font-medium"
+                        class="inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
                         @click="eliminarSolicitud(solicitud.id)"
                     >
-                        🗑 Eliminar
+                        <Trash2 class="size-4" />
+                        Eliminar
                     </button>
                 </div>
+
+                <!-- MENSAJE EXPIRADA -->
+                <p
+                    v-if="solicitud.estado_temporal === 'expirada'"
+                    class="mt-3 text-right text-xs text-[#6F6266]"
+                >
+                    Esta solicitud ya expiró y no puede editarse.
+                </p>
             </article>
-        </div>
-    </div>
+        </section>
+    </main>
 </template>
