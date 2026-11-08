@@ -70,12 +70,22 @@ class FacultadController extends Controller
     }
 
     // Eliminar una facultad
-    public function destroy(Facultad $facultad): RedirectResponse
-    {
-        $facultad->delete();
-
+   public function destroy(Facultad $facultad): RedirectResponse
+{
+    // Impedir eliminar facultades con estudiantes asociados
+    if ($facultad->users()->exists()) {
         return redirect()
             ->route('admin.facultades.index')
-            ->with('success', 'Facultad eliminada correctamente.');
+            ->with(
+                'error',
+                'No se puede eliminar esta facultad porque tiene estudiantes asignados.'
+            );
     }
+
+    $facultad->delete();
+
+    return redirect()
+        ->route('admin.facultades.index')
+        ->with('success', 'Facultad eliminada correctamente.');
+}
 }
